@@ -1,0 +1,10 @@
+
+.jumbotron {
+    background-color: lightcoral;
+}
+
+.navigation {
+    position:fixed;
+    min-width:500px;
+    padding-right: 20px;
+}

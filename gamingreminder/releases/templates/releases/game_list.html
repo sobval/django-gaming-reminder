@@ -1,48 +1,73 @@
 {% extends '_layout.html' %}
 {% load staticfiles %}
+{% load release_extras %}
 
 
 {% block title %}Releases - Gaming Reminder{% endblock %}
-{% block myjavascript %}<script src="{% static 'js/myapp.js' %}"></script>{% endblock %}
+{% block myjavascript %}
+    <script src="{% static 'js/myapp.js' %}"></script>
+    <script src="{% static 'js/FilterApp.js' %}"></script>
+{% endblock %}
 {% block other_css %}<link rel="stylesheet" type="text/css" href="{% static 'css/game_list.css' %}">{% endblock %}
 
 {% block body_content %}
     <div class="container">
+    <div class="row">
     <!-- sidebar -->
     <div class="col-xs-3">
 
         <div class="navigation">
           <nav class="nav nav-pills nav-stacked">
 
-            <div class="regionMenu">
-            <a href="#" data-target="#regionItems" data-toggle="collapse"><i class="fa fa-list mt"></i><span class="collapse in hidden-xs">Worldwide<span class="caret"></span></span></a>
+            <p class="display-5 text-primary">Region</p>
+            {% verbatim %}
+            <div ng-app="FilterApp">
+            <div class="regionMenu" ng-controller="myRegionCtrl">
+            <a href="#" data-target="#regionItems" data-toggle="collapse" style="color:black;"><i class="fa fa-list mt"></i><span class="collapse in hidden-xs">{{ selected.name }}<span class="caret"></span></span></a>
                 <ul class="nav nav-stacked collapse" id="regionItems">
-                    <li><a href="#">Worldwide</a></li>
-                    <li><a href="#">North America</a></li>
-                    <li><a href="#">Europe</a></li>
-                    <li><a href="#">Australia</a></li>
-                    <li><a href="#">New Zealand</a></li>
-                    <li><a href="#">Japan</a></li>
-                    <li><a href="#">China</a></li>
-                    <li><a href="#">Asia</a></li>
+                    <li ng-click="setNewRegion(region)" ng-repeat="region in regions">
+                        <a class="region" href="" title="{{ region.id }}">{{ region.name }}</a>
+                    </li>
                 </ul>
             </div>
 
-            <p class="display-5">Platforms</p>
-            <li><a class="nav-link active" title="0" href="">All</a></li>
-            <li><a class="nav-link" href="#">PC</a></li>
-            <li><a class="nav-link" href="#">3DS</a></li>
-            <li><a class="nav-link" href="#">Wii U</a></li>
-            <li><a class="nav-link" title="46" href="">PS4</a></li>
-            <li><a class="nav-link" href="#">PS3</a></li>
-            <li><a class="nav-link" href="#">Vita</a></li>
-            <li><a class="nav-link" href="#">Xbox One</a></li>
-            <li><a class="nav-link" href="#">Xbox 360</a></li>
+            <p class="display-5 text-primary" style="margin-top: 5%">Platform</p>
+            <div class="platformMenu" ng-controller="myPlatformCtrl">
+            <a href="#" data-target="#platformItems" data-toggle="collapse" style="color:black;"><i class="fa fa-list mt"></i><span class="collapse in hidden-xs">{{ selected.name }}<span class="caret"></span></span></a>
+                <ul class="nav nav-stacked collapse" id="platformItems">
+                    <li ng-click="setNewPlatform(platform)" ng-repeat="platform in platforms">
+                        <a class="platform" href="" title="{{ platform.id }}">{{ platform.name }}</a>
+                    </li>
+                </ul>
+            </div>
+            </div> <!-- /filterapp -->
+            {% endverbatim %}
+            <button id="btnGo" type="button" class="btn btn-info">Go!</button>
            </nav>
         </div>
 
     </div>
     <!-- /sidebar -->
+    <!-- content -->
+    <div class="col-xs-9">
+        <div class="content">
+        {% for game in games %}
+            <div class="col-md-4">
+                <div class="gameCard">
+                {% if game.cover %}
+                    <img class="img-fluid" src="https://res.cloudinary.com/igdb/image/upload/t_screenshot_med/{{ game.cover.cloudinary_id }}.png" alt="">
+                {% elif game.screenshots %}
+                    <img class="img-fluid" src="https://res.cloudinary.com/igdb/image/upload/t_screenshot_med/{{ game.screenshots.0.cloudinary_id }}.png" alt="">
+                {% else %}
+                    <img class="img-fluid" src="https://res.cloudinary.com/igdb/image/upload/t_screenshot_med/ag45mlr80vtsfi8donre.png" alt="">
+                {% endif %}
+                <p><a href="{% url 'releases:detail' pk=game.id %}">{{ game.name | truncatechars:25 }}</a></p>
+                <p>First release date:</p>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    <!-- /content -->
     </div>
 
 {% endblock %}

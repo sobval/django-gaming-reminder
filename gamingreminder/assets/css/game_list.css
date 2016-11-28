@@ -1,0 +1,17 @@
+body {
+    padding-top: 70px;
+}
+
+.navigation a {
+    color: lightcoral;
+}
+
+.navigation li {
+    width: 30%;
+}
+
+#btnGo {
+    margin-top: 5%;
+    width: 25%;
+    border-radius: 0;
+}

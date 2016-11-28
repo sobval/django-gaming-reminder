@@ -1,0 +1,15 @@
+{% for game in games %}
+    <div class="col-md-4">
+        <div class="gameCard">
+        {% if game.cover %}
+            <img class="img-fluid" src="https://res.cloudinary.com/igdb/image/upload/t_screenshot_med/{{ game.cover.cloudinary_id }}.png" alt="">
+        {% elif game.screenshots %}
+            <img class="img-fluid" src="https://res.cloudinary.com/igdb/image/upload/t_screenshot_med/{{ game.screenshots.0.cloudinary_id }}.png" alt="">
+        {% else %}
+            <img class="img-fluid" src="https://sickr.files.wordpress.com/2016/08/controllers.jpg" alt="https://mynintendonews.com/">
+        {% endif %}
+        <p><a href="{% url 'releases:detail' pk=game.id %}">{{ game.name | truncatechars:25 }}</a></p>
+        <p>First release date:</p>
+        </div>
+    </div>
+{% endfor %}

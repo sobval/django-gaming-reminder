@@ -1,0 +1,45 @@
+{% extends '_layout.html' %}
+
+{% block title %}Home - Gaming Reminder{% endblock %}
+
+{% block jumbotron %}
+    <div class="jumbotron">
+        <div class="container text-xs-center pt-3">
+            <h1 class="display-2 hidden-md-down">↑ ↑ ↓ ↓ ← → ← → B A </h1>
+            <p class="lead">Gaming Reminder</p>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block body_content %}
+    <div class="container">
+        <div class="row">
+            <!-- the homepage doesn't have a sidebar -->
+            <div class="col-md-12">
+                <div class="col-md-4 mb-2">
+                    <h3 class="mb-2">About</h3>
+                    Salut!
+                    Gaming Reminder est un calendrier des sorties de jeux vidéo
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <h3 class="mb-2">Releases</h3>
+                    Cliquez pour voir les nouveautés
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <h3 class="mb-2">Search</h3>
+                        <p>Rechercher des jeux</p>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="The Legend of Zelda">
+                        <span class="input-group-btn">
+                            <button class="btn btn-outline-success" type="button"><span class="glyphicon glyphicon-search"></span>Search</button>
+                        </span>
+                    </div>
+                </div>
+
+            </div> <!-- /column 12 rows -->
+        </div> <!-- /row -->
+    </div>
+{% endblock %}
